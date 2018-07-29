@@ -7,13 +7,15 @@ public class Enemy : Character {
     public float detectionDistance;
     // Use this for initialization
     public GameObject cone;
+    
     private void OnMouseDown()
     {
         UIController.ui.AssignDebugTarget(this);
     }
 
-    private void Start()
+    public override void CharacterStart()
     {
+        base.CharacterStart();
         MakeDetectionCone();
     }
 

@@ -183,6 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60aae4b5cacb0a4c9c032276f051018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 6
+  rot: 130
   detectionDistance: 10
   cone: {fileID: 1004739935519352, guid: 90a73b1f310a4f548beab6968d54bc06, type: 2}
 --- !u!120 &120263249992852684

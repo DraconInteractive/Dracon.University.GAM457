@@ -5,18 +5,39 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour {
     public GameObject enemyPrefab;
     List<Enemy> enemies = new List<Enemy>();
-	// Use this for initialization
-	public IEnumerator VisionUpdate ()
+
+
+    public IEnumerator LogicUpdate ()
     {
         while (true)
         {
-            foreach (Enemy enemy in enemies)
-            {
-                EnemyVisionUpdate(enemy);
-                yield return null;
-            }
+            yield return StartCoroutine(VisionUpdate());
+            yield return StartCoroutine(StrategyFSMUpdate());
+            yield return StartCoroutine(TacticalFSMUpdate());
+            yield return null;
         }
         
+        yield break;
+    }
+
+	public IEnumerator VisionUpdate ()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            EnemyVisionUpdate(enemy);
+            yield return null;
+        }
+
+        yield break;
+    }
+
+    public IEnumerator StrategyFSMUpdate ()
+    {
+        yield break;
+    }
+
+    public IEnumerator TacticalFSMUpdate ()
+    {
         yield break;
     }
 

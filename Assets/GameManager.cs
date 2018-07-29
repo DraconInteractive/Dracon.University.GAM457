@@ -3,24 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
+    public static GameManager manager;
+    
     public int enemyCount;
-	// Use this for initialization
-	void Start () {
+    [HideInInspector]
+    public EnemyController enemyController;
+    [HideInInspector]
+    public TiledWorldGenerator tileManager;
+
+    private void Awake()
+    {
+        manager = this;
+    }
+    // Use this for initialization
+    void Start () {
         StartCoroutine(Setup());
 	}
 	
 	IEnumerator Setup ()
     {
-        TiledWorldGenerator w = GetComponent<TiledWorldGenerator>();
-        w.Setup();
-        GetComponent<PlayerController>().SpawnCharacter(w.GetAvailableTile());
-        EnemyController e = GetComponent<EnemyController>();
+        tileManager = GetComponent<TiledWorldGenerator>();
+        tileManager.Setup();
+        GetComponent<PlayerController>().SpawnCharacter(tileManager.GetAvailableTile());
+        enemyController = GetComponent<EnemyController>();
         for (int i = 0; i < enemyCount; i++)
         {
-            e.SpawnEnemy(w.GetAvailableTile());
+            enemyController.SpawnEnemy(tileManager.GetAvailableTile());
         }
-        e.SetupEnemyDetection();
-        e.StartCoroutine(e.VisionUpdate());
+        enemyController.SetupEnemyDetection();
+        enemyController.StartCoroutine(enemyController.LogicUpdate());
         yield break;
     }
 }
