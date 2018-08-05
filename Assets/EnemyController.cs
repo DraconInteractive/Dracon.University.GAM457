@@ -2,139 +2,144 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour {
-    public GameObject enemyPrefab;
-    List<Enemy> enemies = new List<Enemy>();
-
-
-    public IEnumerator LogicUpdate ()
+namespace Weekly
+{
+    public class EnemyController : MonoBehaviour
     {
-        while (true)
+        public GameObject enemyPrefab;
+        List<Enemy> enemies = new List<Enemy>();
+
+
+        public IEnumerator LogicUpdate()
         {
-            yield return StartCoroutine(VisionUpdate());
-            yield return StartCoroutine(StrategyFSMUpdate());
-            yield return StartCoroutine(TacticalFSMUpdate());
-            yield return null;
-        }
-        
-        yield break;
-    }
-
-	public IEnumerator VisionUpdate ()
-    {
-        foreach (Enemy enemy in enemies)
-        {
-            EnemyVisionUpdate(enemy);
-            yield return null;
-        }
-
-        yield break;
-    }
-
-    public IEnumerator StrategyFSMUpdate ()
-    {
-        yield break;
-    }
-
-    public IEnumerator TacticalFSMUpdate ()
-    {
-        yield break;
-    }
-
-    public void SpawnEnemy (Tile t)
-    {
-        t.occupant = Instantiate(enemyPrefab, t.transform.position + Vector3.up * 1.5f, Quaternion.identity, this.transform);
-        enemies.Add(t.occupant.GetComponent<Enemy>());
-    }
-
-    public void SetupEnemyDetection ()
-    {
-        int counter = 0;
-        foreach (Enemy e in enemies)
-        {
-            e.gameObject.name = "Enemy " + counter;
-            counter++;
-            foreach (Enemy ee in enemies)
+            while (true)
             {
-                if (e != ee)
+                yield return StartCoroutine(VisionUpdate());
+                yield return StartCoroutine(StrategyFSMUpdate());
+                yield return StartCoroutine(TacticalFSMUpdate());
+                yield return null;
+            }
+
+            yield break;
+        }
+
+        public IEnumerator VisionUpdate()
+        {
+            foreach (Enemy enemy in enemies)
+            {
+                EnemyVisionUpdate(enemy);
+                yield return null;
+            }
+
+            yield break;
+        }
+
+        public IEnumerator StrategyFSMUpdate()
+        {
+            yield break;
+        }
+
+        public IEnumerator TacticalFSMUpdate()
+        {
+            yield break;
+        }
+
+        public void SpawnEnemy(Tile t)
+        {
+            t.occupant = Instantiate(enemyPrefab, t.transform.position + Vector3.up * 1.5f, Quaternion.identity, this.transform);
+            enemies.Add(t.occupant.GetComponent<Enemy>());
+        }
+
+        public void SetupEnemyDetection()
+        {
+            int counter = 0;
+            foreach (Enemy e in enemies)
+            {
+                e.gameObject.name = "Enemy " + counter;
+                counter++;
+                foreach (Enemy ee in enemies)
                 {
-                    e.detectionDictionary.Add(ee, 0);
+                    if (e != ee)
+                    {
+                        e.detectionDictionary.Add(ee, 0);
+                    }
                 }
             }
         }
-    }
-    void EnemyVisionUpdate(Enemy enemy)
-    {
-
-        //Foreach enemy, check the dot product of every other enemy. 
-        //if the dot is greater than 0.5 (60 degree field), do a distance check, then a raycast.
-        //If the enemy passes all checks, they are "detected". 
-        //Each enemy has a dictionary of all other units, as well as how detected they are.
-        //If a unit is "detected" during this pass, this adds onto their detection float. if this float is over 1, they are suspicious, and above 2 they are truly detected. 
-        foreach (Enemy e in enemies)
+        void EnemyVisionUpdate(Enemy enemy)
         {
-            bool add = false;
-            if (e != enemy)
+
+            //Foreach enemy, check the dot product of every other enemy. 
+            //if the dot is greater than 0.5 (60 degree field), do a distance check, then a raycast.
+            //If the enemy passes all checks, they are "detected". 
+            //Each enemy has a dictionary of all other units, as well as how detected they are.
+            //If a unit is "detected" during this pass, this adds onto their detection float. if this float is over 1, they are suspicious, and above 2 they are truly detected. 
+            foreach (Enemy e in enemies)
             {
-                Vector3 heading = (e.transform.position - enemy.transform.position).normalized;
-                Vector3 forward = transform.forward;
-                float dot = Vector3.Dot(heading, forward);
-
-                if (dot > 0.5f)
+                bool add = false;
+                if (e != enemy)
                 {
-                    float dist = Vector3.Distance(enemy.transform.position, e.transform.position);
+                    Vector3 heading = (e.transform.position - enemy.transform.position).normalized;
+                    Vector3 forward = transform.forward;
+                    float dot = Vector3.Dot(heading, forward);
 
-                    if (dist < enemy.detectionDistance)
+                    if (dot > 0.5f)
                     {
-                        Ray ray = new Ray(enemy.transform.position + Vector3.up * 0.5f, (e.transform.position - enemy.transform.position).normalized);
-                        RaycastHit hit;
+                        float dist = Vector3.Distance(enemy.transform.position, e.transform.position);
 
-                        if (Physics.Raycast(ray, out hit))
+                        if (dist < enemy.detectionDistance)
                         {
-                            if (hit.transform.gameObject == e.gameObject)
+                            Ray ray = new Ray(enemy.transform.position + Vector3.up * 0.5f, (e.transform.position - enemy.transform.position).normalized);
+                            RaycastHit hit;
+
+                            if (Physics.Raycast(ray, out hit))
+                            {
+                                if (hit.transform.gameObject == e.gameObject)
+                                {
+                                    add = true;
+                                }
+                                //print(enemy.name + " Ray blocked: " + hit.transform.name);
+                                //hit.transform.GetComponent<Renderer>().material.color = Color.cyan;
+                            }
+                            else
                             {
                                 add = true;
                             }
-                            //print(enemy.name + " Ray blocked: " + hit.transform.name);
-                            //hit.transform.GetComponent<Renderer>().material.color = Color.cyan;
-                        }
-                        else
-                        {
-                            add = true;
                         }
                     }
-                }
-                //float mod = 0;
-                if (add)
-                {
-                    enemy.detectionDictionary[e] += 1 * Time.deltaTime * enemies.Count;
-                }
-                else
-                {
-                    enemy.detectionDictionary[e] -= 0.5f * Time.deltaTime * enemies.Count;
-                }
+                    //float mod = 0;
+                    if (add)
+                    {
+                        enemy.detectionDictionary[e] += 1 * Time.deltaTime * enemies.Count;
+                    }
+                    else
+                    {
+                        enemy.detectionDictionary[e] -= 0.5f * Time.deltaTime * enemies.Count;
+                    }
 
-                enemy.detectionDictionary[e] = Mathf.Clamp(enemy.detectionDictionary[e], -1, 3);
+                    enemy.detectionDictionary[e] = Mathf.Clamp(enemy.detectionDictionary[e], -1, 3);
+                }
             }
-        }
 
-        //Just for debug, but if this enemy has one fully detected unit, it will turn its marker true red. 
-        bool detected = false;
-        foreach (KeyValuePair<Character, float> pair in enemy.detectionDictionary)
-        {
-            if (pair.Value > 2)
+            //Just for debug, but if this enemy has one fully detected unit, it will turn its marker true red. 
+            bool detected = false;
+            foreach (KeyValuePair<Character, float> pair in enemy.detectionDictionary)
             {
-                detected = true;
-                break;
+                if (pair.Value > 2)
+                {
+                    detected = true;
+                    break;
+                }
             }
-        }
-        if (detected)
-        {
-            LineRenderer l = enemy.GetComponent<LineRenderer>();
-            l.startColor = Color.red;
-            l.endColor = Color.red;
-        }
-        
+            if (detected)
+            {
+                LineRenderer l = enemy.GetComponent<LineRenderer>();
+                l.startColor = Color.red;
+                l.endColor = Color.red;
+            }
 
+
+        }
     }
+
 }
