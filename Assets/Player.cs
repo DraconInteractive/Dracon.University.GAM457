@@ -107,17 +107,19 @@ namespace Final
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        public void Damage(int amount)
+        public void Damage(float amount)
         {
+            print("Damaging player: " + amount);
             health -= amount;
             health = Mathf.Clamp(health, 0, healthMax);
+            CameraShake.shake.StartShake(0.1f);
             if (health <= 0)
             {
                 Kill();
             }
         }
 
-        public void Heal(int amount)
+        public void Heal(float amount)
         {
             health += amount;
             health = Mathf.Clamp(health, 0, healthMax);

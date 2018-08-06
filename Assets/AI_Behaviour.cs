@@ -140,6 +140,7 @@ namespace Final
         public void Attack ()
         {
             turret.ClearAction();
+            turret.StartCoroutine(turret.Attack());
         }
     }
 }
