@@ -12,13 +12,6 @@ namespace Final
         public Renderer signalRenderer;
         public Transform gunPivot;
 
-        
-
-        public float attackDistance;
-        
-
-        
-
         public AudioSource turretActiveAudio;
         public AudioClip defaultAudio, suspiciousAudio, alertAudio, fireAudio;
 
@@ -53,7 +46,8 @@ namespace Final
 
         public override void Attack()
         {
-            ClearAction();
+            //setting movementstop to false for now. We will see
+            ClearAction(false);
             actionRoutine = StartCoroutine(DoAttack());
         }
 

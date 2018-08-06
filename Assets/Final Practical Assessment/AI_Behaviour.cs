@@ -12,22 +12,22 @@ namespace Final
         //Behaviour tree integration for AI
         public RootNode rootNode;
 
-        Turret turret;
+        Enemy enemy;
 
         public string current;
         // Use this for initialization
         void Start()
         {
-            turret = GetComponent<Turret>();
+            enemy = GetComponent<Enemy>();
         }
 
         public void EvaluateTree()
         {
             //print("tree evaluated");
 
-            if (turret == null)
+            if (enemy == null)
             {
-                turret = GetComponent<Turret>();
+                enemy = GetComponent<Enemy>();
             }
 
             BehaviourNode currentNode = rootNode.childNode;
@@ -61,38 +61,38 @@ namespace Final
 
         public bool AtDefault ()
         {
-            return (turret.alertLevel == Turret.AlertLevel.Default);
+            return (enemy.alertLevel == Enemy.AlertLevel.Default);
         }
 
         public bool AtSuspicious ()
         {
-            return (turret.alertLevel == Turret.AlertLevel.Suspicious);
+            return (enemy.alertLevel == Enemy.AlertLevel.Suspicious);
         }
 
         public bool AtAlert ()
         {
-            return (turret.alertLevel == Turret.AlertLevel.Alert);
+            return (enemy.alertLevel == Enemy.AlertLevel.Alert);
         }
 
         public bool AlertLevelAppropriate ()
         {
             bool b = false;
-            switch (turret.alertLevel)
+            switch (enemy.alertLevel)
             {
-                case Turret.AlertLevel.Default:
-                    if (turret.playerDetectionLevel < 1)
+                case Enemy.AlertLevel.Default:
+                    if (enemy.playerDetectionLevel < 1)
                     {
                         b = true;
                     }
                     break;
-                case Turret.AlertLevel.Suspicious:
-                    if (turret.playerDetectionLevel < 2 && turret.playerDetectionLevel >= 1)
+                case Enemy.AlertLevel.Suspicious:
+                    if (enemy.playerDetectionLevel < 2 && enemy.playerDetectionLevel >= 1)
                     {
                         b = true;
                     }
                     break;
-                case Turret.AlertLevel.Alert:
-                    if (turret.playerDetectionLevel >= 2)
+                case Enemy.AlertLevel.Alert:
+                    if (enemy.playerDetectionLevel >= 2)
                     {
                         b = true;
                     }
@@ -105,23 +105,23 @@ namespace Final
         public bool WithinAttackDistance ()
         {
             float dist = Vector3.Distance(Player.player.transform.position, transform.position);
-            return (dist < turret.attackDistance);
+            return (dist < enemy.attackDistance);
         }
 
         public void ChangeAlertLevel ()
         {
-            turret.ClearAction();
-            if (turret.playerDetectionLevel < 1)
+            enemy.ClearAction(true);
+            if (enemy.playerDetectionLevel < 1)
             {
-                turret.SetAlertLevel(Turret.AlertLevel.Default);
+                enemy.SetAlertLevel(Enemy.AlertLevel.Default);
             }
-            else if (turret.playerDetectionLevel >= 1 && turret.playerDetectionLevel < 2)
+            else if (enemy.playerDetectionLevel >= 1 && enemy.playerDetectionLevel < 2)
             {
-                turret.SetAlertLevel(Turret.AlertLevel.Suspicious);
+                enemy.SetAlertLevel(Enemy.AlertLevel.Suspicious);
             }
-            else if (turret.playerDetectionLevel >= 2)
+            else if (enemy.playerDetectionLevel >= 2)
             {
-                turret.SetAlertLevel(Turret.AlertLevel.Alert);
+                enemy.SetAlertLevel(Enemy.AlertLevel.Alert);
             }
         }
 
@@ -129,18 +129,19 @@ namespace Final
         {
             //Referencing Star Wars: The Revenge of the Sith, because one hearing is quite enough. 
             print("How did this happen? We're smarter than this!");
-            turret.ClearAction();
+            enemy.ClearAction(true);
         }
 
         public void Wait ()
         {
-            turret.ClearAction();
+            enemy.ClearAction(true);
         }
 
         public void Attack ()
         {
-            turret.ClearAction();
-            turret.StartCoroutine(turret.Attack());
+            //turret.ClearAction();
+            //turret.StartCoroutine(turret.DoAttack());
+            enemy.Attack();
         }
     }
 }

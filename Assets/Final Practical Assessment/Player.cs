@@ -13,7 +13,8 @@ namespace Final
 
         public float movementSpeed, rotationSpeed, jumpForce, healthMax;
 
-        float camUpAngle, health;
+        [HideInInspector]
+        public float camUpAngle, health;
 
         public bool onGround;
 

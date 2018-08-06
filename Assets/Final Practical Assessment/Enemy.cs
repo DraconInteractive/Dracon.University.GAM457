@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Final
 {
@@ -12,8 +13,10 @@ namespace Final
         public Sense sense;
         [HideInInspector]
         public AI_Behaviour tree;
+        [HideInInspector]
+        public NavMeshAgent agent;
 
-        public static List<Enemy> all;
+        public static List<Enemy> all = new List<Enemy>();
 
         public enum AlertLevel
         {
@@ -28,13 +31,20 @@ namespace Final
 
         public Coroutine actionRoutine;
 
+        public float attackDistance;
         private void Awake()
         {
             sense = GetComponent<Sense>();
             tree = GetComponent<AI_Behaviour>();
+            agent = GetComponent<NavMeshAgent>();
             all.Add(this);
+            EnemyAwake();
         }
 
+        public virtual void EnemyAwake ()
+        {
+
+        }
         // Use this for initialization
         void Start()
         {
@@ -48,7 +58,7 @@ namespace Final
             tree.EvaluateTree();
         }
 
-        void EvaluateDetection()
+        public virtual void EvaluateDetection()
         {
             if (sense.PlayerDetect())
             {
@@ -83,11 +93,16 @@ namespace Final
 
         }
 
-        public void ClearAction()
+        public void ClearAction(bool stopMovement)
         {
             if (actionRoutine != null)
             {
                 StopCoroutine(actionRoutine);
+            }
+
+            if (stopMovement)
+            {
+                agent.SetDestination(transform.position);
             }
         }
 
@@ -95,6 +110,13 @@ namespace Final
         {
 
         }
+
+        public void MoveTo (Vector3 point)
+        {
+            agent.SetDestination(point);
+        }
+
+
     }
 
     
