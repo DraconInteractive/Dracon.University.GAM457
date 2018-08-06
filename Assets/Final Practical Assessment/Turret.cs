@@ -5,76 +5,27 @@ using UnityEngine;
 namespace Final
 {
     [RequireComponent(typeof(Sense))]
-    public class Turret : MonoBehaviour
+    public class Turret : Enemy
     {
-        Player player;
-        Sense sense;
-        AI_Behaviour tree;
+        
+        
         public Renderer signalRenderer;
         public Transform gunPivot;
 
-        public float playerDetectionLevel;
-        public float detectionChangeModifier;
+        
 
         public float attackDistance;
-        public enum AlertLevel
-        {
-            Default,
-            Suspicious,
-            Alert
-        }
-        public AlertLevel alertLevel;
+        
 
-        public Coroutine actionRoutine;
+        
 
         public AudioSource turretActiveAudio;
         public AudioClip defaultAudio, suspiciousAudio, alertAudio, fireAudio;
 
         public float coolDown, damage;
-        private void Awake()
-        {
-            sense = GetComponent<Sense>();
-            tree = GetComponent<AI_Behaviour>();
-        }
-        // Use this for initialization
-        void Start()
-        {
-            player = Player.player;
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-            EvaluateDetection();
-            tree.EvaluateTree();
-        }
 
-        void EvaluateDetection ()
-        {
-            if (sense.PlayerDetect())
-            {
-                playerDetectionLevel += Time.deltaTime * detectionChangeModifier;
-            }
-            else
-            {
-                if (playerDetectionLevel > 0)
-                {
-                    playerDetectionLevel -= Time.deltaTime * detectionChangeModifier * 0.5f;
-                }
-            }
-
-            playerDetectionLevel = Mathf.Clamp(playerDetectionLevel, 0, 3);
-        }
-
-        public void ClearAction ()
-        {
-            if (actionRoutine != null)
-            {
-                StopCoroutine(actionRoutine);
-            }
-        }
-
-        public void SetAlertLevel (AlertLevel newLevel)
+        public override void SetAlertLevel (AlertLevel newLevel)
         {
             signalRenderer.material.EnableKeyword("_EMISSION");
             switch (newLevel)
@@ -100,7 +51,13 @@ namespace Final
             
         }
 
-        public IEnumerator Attack ()
+        public override void Attack()
+        {
+            ClearAction();
+            actionRoutine = StartCoroutine(DoAttack());
+        }
+
+        public IEnumerator DoAttack ()
         {
             while (true)
             {
