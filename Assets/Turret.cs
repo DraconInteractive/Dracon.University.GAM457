@@ -15,6 +15,8 @@ namespace Final
 
         public float playerDetectionLevel;
         public float detectionChangeModifier;
+
+        public float attackDistance;
         public enum AlertLevel
         {
             Default,
@@ -25,9 +27,12 @@ namespace Final
 
         public Coroutine actionRoutine;
 
+        public AudioSource turretActiveAudio;
+        public AudioClip defaultAudio, suspiciousAudio, alertAudio, fireAudio;
         private void Awake()
         {
             sense = GetComponent<Sense>();
+            tree = GetComponent<AI_Behaviour>();
         }
         // Use this for initialization
         void Start()
@@ -69,7 +74,21 @@ namespace Final
 
         public void SetAlertLevel (AlertLevel newLevel)
         {
+            switch (newLevel)
+            {
+                case AlertLevel.Default:
+                    turretActiveAudio.PlayOneShot(defaultAudio);
+                    break;
+                case AlertLevel.Suspicious:
+                    turretActiveAudio.PlayOneShot(suspiciousAudio);
+                    break;
+                case AlertLevel.Alert:
+                    turretActiveAudio.PlayOneShot(alertAudio);
+                    break;
+            }
 
+            alertLevel = newLevel;
+            
         }
     }
 }

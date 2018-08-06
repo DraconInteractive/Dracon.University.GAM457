@@ -102,8 +102,15 @@ namespace Final
             return b;
         }
 
+        public bool WithinAttackDistance ()
+        {
+            float dist = Vector3.Distance(Player.player.transform.position, transform.position);
+            return (dist < turret.attackDistance);
+        }
+
         public void ChangeAlertLevel ()
         {
+            turret.ClearAction();
             if (turret.playerDetectionLevel < 1)
             {
                 turret.SetAlertLevel(Turret.AlertLevel.Default);
@@ -122,6 +129,17 @@ namespace Final
         {
             //Referencing Star Wars: The Revenge of the Sith, because one hearing is quite enough. 
             print("How did this happen? We're smarter than this!");
+            turret.ClearAction();
+        }
+
+        public void Wait ()
+        {
+            turret.ClearAction();
+        }
+
+        public void Attack ()
+        {
+            turret.ClearAction();
         }
     }
 }
