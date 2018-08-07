@@ -595,6 +595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightDist: 35
   eyePos: {fileID: 4499463578491126}
+  lastPlayerPos: {x: 0, y: 0, z: 0}
   debug: 
   dist: 0
   dot: 0
@@ -618,6 +619,7 @@ MonoBehaviour:
   detectionGain: 1.5
   detectionLoss: 1.5
   attackDistance: 35
+  hasSignal: 1
   signalRenderer: {fileID: 23718648410619936}
   gunPivot: {fileID: 4015079227278726}
   turretActiveAudio: {fileID: 82039667630287616}
@@ -631,7 +633,7 @@ MonoBehaviour:
   shakeAmount: 0.05
   laser: {fileID: 120202159326085326}
   lPulseDuration: 0.2
-  lPulseAmount: 0.25
+  lPulseAmount: 0.025
 --- !u!120 &120202159326085326
 LineRenderer:
   m_ObjectHideFlags: 1

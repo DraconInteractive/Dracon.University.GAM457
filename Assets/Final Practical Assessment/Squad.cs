@@ -40,12 +40,12 @@ namespace Final
 
         private void Update()
         {
-            playerDetectionLevel -= detectionLoss * Time.deltaTime;
+            PlayerDetectionLevel -= detectionLoss * Time.deltaTime;
 
             ChangeAlertLevel();
-            melee.alertLevel = alertLevel;
-            blocker.alertLevel = alertLevel;
-            ranged.alertLevel = alertLevel;
+            melee.playerDetectionLevel = playerDetectionLevel;
+            blocker.playerDetectionLevel = playerDetectionLevel;
+            ranged.playerDetectionLevel = playerDetectionLevel;
         }
 
         public POI GetPlayerIntent ()

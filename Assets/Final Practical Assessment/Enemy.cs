@@ -33,7 +33,9 @@ namespace Final
 
         public float attackDistance;
 
-        
+        public bool hasSignal;
+        public Renderer signalRenderer;
+
         private void Awake()
         {
             sense = GetComponent<Sense>();
@@ -47,6 +49,7 @@ namespace Final
         {
 
         }
+
         // Use this for initialization
         void Start()
         {
@@ -108,6 +111,18 @@ namespace Final
 
             alertLevel = newLevel;
 
+            switch (newLevel)
+            {
+                case AlertLevel.Default:
+                    SetSignal(Color.blue, 3);
+                    break;
+                case AlertLevel.Suspicious:
+                    SetSignal(Color.yellow, 3);
+                    break;
+                case AlertLevel.Alert:
+                    SetSignal(Color.red, 3);
+                    break;
+            }
         }
 
         public void ClearAction(bool stopMovement)
@@ -125,20 +140,42 @@ namespace Final
 
         public virtual void Attack ()
         {
-
+            
         }
 
-        public void MoveTo (Vector3 point)
+        public void MoveToStatic (Vector3 point)
         {
             agent.SetDestination(point);
         }
 
+        public void MoveToDynamic (Transform target)
+        {
+            actionRoutine = StartCoroutine(DynamicMove(target));
+        }
+
+        IEnumerator DynamicMove (Transform target)
+        {
+            while (true)
+            {
+                agent.SetDestination(target.position);
+                yield return new WaitForSeconds(0.1f);
+            }
+            yield break;
+        }
         public void GoToLastSeenPlayer ()
         {
             agent.SetDestination(sense.lastPlayerPos);
         }
 
-        
+        public void SetSignal (Color c, float emissive)
+        {
+            if (hasSignal)
+            {
+                signalRenderer.material.EnableKeyword("_EMISSION");
+                signalRenderer.material.color = c;
+                signalRenderer.material.SetColor("_EmissionColor", c * emissive);
+            }
+        }
     }
 
     

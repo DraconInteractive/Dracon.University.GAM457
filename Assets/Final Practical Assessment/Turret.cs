@@ -7,7 +7,6 @@ namespace Final
     [RequireComponent(typeof(Sense))]
     public class Turret : Enemy
     {
-        public Renderer signalRenderer;
         public Transform gunPivot;
 
         public AudioSource turretActiveAudio;
@@ -33,34 +32,24 @@ namespace Final
         }
         public override void SetAlertLevel (AlertLevel newLevel)
         {
-            signalRenderer.material.EnableKeyword("_EMISSION");
+            base.SetAlertLevel(newLevel);
             switch (newLevel)
             {
                 case AlertLevel.Default:
                     turretActiveAudio.PlayOneShot(defaultAudio);
-                    signalRenderer.material.color = Color.blue;
-                    signalRenderer.material.SetColor("_EmissionColor", Color.blue * 3);
                     break;
                 case AlertLevel.Suspicious:
                     turretActiveAudio.PlayOneShot(suspiciousAudio);
-                    signalRenderer.material.color = Color.yellow;
-                    signalRenderer.material.SetColor("_EmissionColor", Color.yellow * 3);
                     break;
                 case AlertLevel.Alert:
                     turretActiveAudio.PlayOneShot(alertAudio);
-                    signalRenderer.material.color = Color.red;
-                    signalRenderer.material.SetColor("_EmissionColor", Color.red * 3);
                     break;
-            }
-
-            alertLevel = newLevel;
-            
+            }            
         }
+
 
         public override void Attack()
         {
-            //setting movementstop to false for now. We will see
-            ClearAction(false);
             actionRoutine = StartCoroutine(DoAttack());
         }
 

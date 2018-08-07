@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f765339537629e74a907f5d80eef426b, type: 3}
   m_Name: AtCombat_Melee
   m_EditorClassIdentifier: 
-  positive: {fileID: 0}
-  negative: {fileID: 11400000, guid: 1f0785acfe8b82647bac561809cc400f, type: 2}
-  methodName: AtCombat
+  positive: {fileID: 11400000, guid: c979e95385bd7c44aadfc1fb71c92fc2, type: 2}
+  negative: {fileID: 11400000, guid: 25b2b2463b90ec042b1b1bbd3d3be780, type: 2}
+  methodName: AtAlert

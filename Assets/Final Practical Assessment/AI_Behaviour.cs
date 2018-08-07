@@ -155,19 +155,20 @@ namespace Final
         {
             //turret.ClearAction();
             //turret.StartCoroutine(turret.DoAttack());
+            enemy.ClearAction(true);
             enemy.Attack();
         }
 
         public void GoToPlayerLastSeen ()
         {
             enemy.ClearAction(false);
-            enemy.MoveTo(enemy.sense.lastPlayerPos);
+            enemy.MoveToStatic(enemy.sense.lastPlayerPos);
         }
 
         public void PathToPlayer ()
         {
-            enemy.ClearAction(false);
-            enemy.MoveTo(Player.player.transform.position);
+            enemy.ClearAction(true);
+            enemy.MoveToDynamic(Player.player.transform);
         }
     }
 }
