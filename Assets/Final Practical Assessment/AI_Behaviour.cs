@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.AI;
 
 namespace Final
 {
@@ -108,6 +109,19 @@ namespace Final
             return (dist < enemy.attackDistance);
         }
 
+        public bool CanPathToPlayer ()
+        {
+            NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
+            
+            if (agent != null)
+            {
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(Player.player.transform.position, path);
+                return (path.status == NavMeshPathStatus.PathComplete);
+            }
+            return false;
+        }
+
         public void ChangeAlertLevel ()
         {
             enemy.ClearAction(true);
@@ -142,6 +156,18 @@ namespace Final
             //turret.ClearAction();
             //turret.StartCoroutine(turret.DoAttack());
             enemy.Attack();
+        }
+
+        public void GoToPlayerLastSeen ()
+        {
+            enemy.ClearAction(false);
+            enemy.MoveTo(enemy.sense.lastPlayerPos);
+        }
+
+        public void PathToPlayer ()
+        {
+            enemy.ClearAction(false);
+            enemy.MoveTo(Player.player.transform.position);
         }
     }
 }

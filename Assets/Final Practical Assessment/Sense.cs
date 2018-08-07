@@ -9,6 +9,7 @@ namespace Final
         public float sightDist;
         Player player;
         public Transform eyePos;
+        public Vector3 lastPlayerPos;
 
         [Space]
         [Header("Debug")]
@@ -42,6 +43,7 @@ namespace Final
                         bool hitCheck = (hit.transform.gameObject == player.transform.gameObject);
                         if (hitCheck)
                         {
+                            lastPlayerPos = hit.point;
                             return true;
                         }
                     }

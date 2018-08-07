@@ -606,6 +606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightDist: 35
   eyePos: {fileID: 4181690978612258}
+  lastPlayerPos: {x: 0, y: 0, z: 0}
   debug: 
   dist: 0
   dot: 0
@@ -656,6 +657,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightDist: 35
   eyePos: {fileID: 4019268891892358}
+  lastPlayerPos: {x: 0, y: 0, z: 0}
   debug: 
   dist: 0
   dot: 0
@@ -691,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c11b9611f013864f9a2c56cc34fb9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 11400000, guid: 5eb0d854d63db6849a55a7b4883aa0a2, type: 2}
+  rootNode: {fileID: 11400000, guid: 5ded0cb793546ed45a5b7127391876ab, type: 2}
   current: 
 --- !u!114 &114679704984871246
 MonoBehaviour:
@@ -706,6 +708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightDist: 35
   eyePos: {fileID: 4718650744838174}
+  lastPlayerPos: {x: 0, y: 0, z: 0}
   debug: 
   dist: 0
   dot: 0

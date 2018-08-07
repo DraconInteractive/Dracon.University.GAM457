@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace Final
 {
@@ -19,10 +20,17 @@ namespace Final
         public bool onGround;
 
         public LayerMask groundMask;
+
+        public bool hasKey;
+
+        public PostProcessVolume volume;
+        Vignette vignette;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
             player = this;
+            hasKey = false;
         }
 
         // Use this for initialization
@@ -32,6 +40,9 @@ namespace Final
 
             health = healthMax;
 
+            volume.profile.TryGetSettings<Vignette>(out vignette);
+            vignette.enabled.value = true;
+            vignette.intensity.value = 0;
         }
 
         // Update is called once per frame
@@ -118,6 +129,7 @@ namespace Final
             {
                 Kill();
             }
+            AdjustVignette();
         }
 
         public void Heal(float amount)
@@ -128,8 +140,18 @@ namespace Final
             {
                 Kill();
             }
+            AdjustVignette();
         }
 
+        void AdjustVignette ()
+        {
+            vignette.intensity.value = Mathf.InverseLerp(0, 0.5f, 0.5f - (health * 0.0075f));
+            print("V. Intensity: " + vignette.intensity.value + ", Health: " + health);
+        }
+        public void GetKey ()
+        {
+            hasKey = true;
+        }
     }
 }
 

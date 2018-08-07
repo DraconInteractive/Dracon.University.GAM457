@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //Script derived (but not copied) from https://gist.github.com/ftvs/5822103
+
 public class CameraShake : MonoBehaviour {
     public static CameraShake shake;
     Vector3 init = Vector3.zero;

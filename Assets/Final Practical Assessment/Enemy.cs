@@ -32,6 +32,8 @@ namespace Final
         public Coroutine actionRoutine;
 
         public float attackDistance;
+
+        
         private void Awake()
         {
             sense = GetComponent<Sense>();
@@ -49,13 +51,28 @@ namespace Final
         void Start()
         {
             player = Player.player;
+
+            EnemyStart();
         }
 
+        public virtual void EnemyStart ()
+        {
+
+        }
         // Update is called once per frame
         void Update()
         {
             EvaluateDetection();
             tree.EvaluateTree();
+
+            if (Input.GetKeyDown (KeyCode.L))
+            {
+                if (this is Turret)
+                {
+                    (this as Turret).StartShake();
+                    (this as Turret).StartPulse();
+                }
+            }
         }
 
         public virtual void EvaluateDetection()
@@ -116,7 +133,12 @@ namespace Final
             agent.SetDestination(point);
         }
 
+        public void GoToLastSeenPlayer ()
+        {
+            agent.SetDestination(sense.lastPlayerPos);
+        }
 
+        
     }
 
     
