@@ -122,6 +122,44 @@ namespace Final
             return false;
         }
 
+        public bool MeleeAlive ()
+        {
+            if (enemy is Blocker_Enemy)
+            {
+                return ((enemy as Blocker_Enemy).squad.melee != null);
+            }
+            if (enemy is Melee_Enemy)
+            {
+                return true;
+            }
+            if (enemy is Ranged_Enemy)
+            {
+                return ((enemy as Ranged_Enemy).squad.melee != null);
+            }
+
+            return false;
+        }
+
+        public bool AtBlockingPosition ()
+        {
+            Vector3 bp = Vector3.zero;
+            if (enemy is Blocker_Enemy)
+            {
+                bp = (enemy as Blocker_Enemy).squad.blockerPos;
+                return (Vector3.Distance(enemy.transform.position, bp) < 0.2f);
+            }
+            if (enemy is Melee_Enemy)
+            {
+                bp = (enemy as Melee_Enemy).squad.blockerPos;
+                return (Vector3.Distance(enemy.transform.position, bp) < 0.2f);
+            }
+            if (enemy is Ranged_Enemy)
+            {
+                bp = (enemy as Ranged_Enemy).squad.blockerPos;
+                return (Vector3.Distance(enemy.transform.position, bp) < 0.2f);
+            }
+        }
+
         public void ChangeAlertLevel ()
         {
             enemy.ClearAction(true);
@@ -170,6 +208,8 @@ namespace Final
             enemy.ClearAction(true);
             enemy.MoveToDynamic(Player.player.transform);
         }
+
+
     }
 }
 
