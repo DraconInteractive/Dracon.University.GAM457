@@ -27,6 +27,7 @@ namespace Final
             if (destroyOnHit)
             {
                 Destroy(this.gameObject, 0.1f);
+                all.Remove(this);
             }
         }
     }

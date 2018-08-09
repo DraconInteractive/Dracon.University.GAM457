@@ -16,6 +16,7 @@ namespace Final
         Enemy enemy;
 
         public string current;
+        public bool printEvents;
         // Use this for initialization
         void Start()
         {
@@ -47,6 +48,11 @@ namespace Final
                 {
                     currentNode = c.negative;
                 }
+
+                if (printEvents)
+                {
+                    print(c.name);
+                }
             }
             if (currentNode is ExecutionNode)
             {
@@ -56,6 +62,11 @@ namespace Final
                 {
                     Invoke(e.methodName, 0);
                     current = e.methodName;
+                    
+                    if (printEvents)
+                    {
+                        print(e.name);
+                    }
                 }
             }
         }
@@ -146,17 +157,28 @@ namespace Final
             if (enemy is Blocker_Enemy)
             {
                 bp = (enemy as Blocker_Enemy).squad.blockerPos;
-                return (Vector3.Distance(enemy.transform.position, bp) < 0.2f);
+                return (Vector3.Distance(enemy.transform.position, bp) < 0.5f);
             }
             if (enemy is Melee_Enemy)
             {
                 bp = (enemy as Melee_Enemy).squad.blockerPos;
-                return (Vector3.Distance(enemy.transform.position, bp) < 0.2f);
+                return (Vector3.Distance(enemy.transform.position, bp) < 0.5f);
             }
             if (enemy is Ranged_Enemy)
             {
                 bp = (enemy as Ranged_Enemy).squad.blockerPos;
-                return (Vector3.Distance(enemy.transform.position, bp) < 0.2f);
+                return (Vector3.Distance(enemy.transform.position, bp) < 0.5f);
+            }
+
+            return false;
+        }
+
+        public void MoveToBlockingPosition ()
+        {
+            enemy.ClearAction(true);
+            if (enemy is Blocker_Enemy)
+            {
+                (enemy as Blocker_Enemy).GoToBlocking();
             }
         }
 
@@ -189,6 +211,11 @@ namespace Final
             enemy.ClearAction(true);
         }
 
+        public void FacePlayer ()
+        {
+            enemy.ClearAction(true);
+            enemy.FacePlayer();
+        }
         public void Attack ()
         {
             //turret.ClearAction();

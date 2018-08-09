@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f765339537629e74a907f5d80eef426b, type: 3}
-  m_Name: MeleeAlive_Blocker
+  m_Name: WithinAttackDistance_Blocker_02
   m_EditorClassIdentifier: 
-  positive: {fileID: 11400000, guid: 1d19d50c685af15499bd0c37d7cad9d0, type: 2}
-  negative: {fileID: 11400000, guid: 2ae504533a94278428e83c0e1026ed7d, type: 2}
-  methodName: MeleeAlive
+  positive: {fileID: 11400000, guid: c4a3e0cf39eccd24ba3fbad3affd1c34, type: 2}
+  negative: {fileID: 11400000, guid: 055eddeceea5e3948a3de0c5834835a9, type: 2}
+  methodName: WithinAttackDistance

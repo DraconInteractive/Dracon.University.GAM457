@@ -16,6 +16,7 @@ namespace Final
         {
             base.OnHitPlayer();
             Player.player.Heal(healAmount);
+            
         }
     }
 }

@@ -64,6 +64,24 @@ namespace Final
                 }
             }
 
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 10))
+                {
+                    Enemy e = hit.transform.GetComponent<Enemy>();
+                    if (e != null)
+                    {
+                        if (e is Melee_Enemy)
+                        {
+                            e.Die();
+                        }
+                    }
+                }
+            }
+
         }
 
         void FixedUpdate()

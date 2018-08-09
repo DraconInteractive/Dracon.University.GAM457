@@ -31,10 +31,11 @@ namespace Final
 
         public Coroutine actionRoutine;
 
-        public float attackDistance;
+        public float attackDistance, rotationSpeed;
 
         public bool hasSignal;
         public Renderer signalRenderer;
+
 
         private void Awake()
         {
@@ -174,6 +175,25 @@ namespace Final
                 signalRenderer.material.EnableKeyword("_EMISSION");
                 signalRenderer.material.color = c;
                 signalRenderer.material.SetColor("_EmissionColor", c * emissive);
+            }
+        }
+
+        public virtual void Die ()
+        {
+            Destroy(this.gameObject, 0.2f);
+        }
+
+        public void FacePlayer ()
+        {
+            actionRoutine = StartCoroutine(TurnToPlayer());
+        }
+
+        IEnumerator TurnToPlayer ()
+        {
+            while (true)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Player.player.transform.position - transform.position, Vector3.up), rotationSpeed * Time.deltaTime);
+                yield return null;
             }
         }
     }

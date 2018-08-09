@@ -849,8 +849,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c11b9611f013864f9a2c56cc34fb9aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 11400000, guid: 5eb0d854d63db6849a55a7b4883aa0a2, type: 2}
+  rootNode: {fileID: 11400000, guid: bca1ad7770c41bb468ec1538c6c5da03, type: 2}
   current: 
+  printEvents: 0
 --- !u!114 &114272696135250584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -881,6 +882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootNode: {fileID: 11400000, guid: 5eb0d854d63db6849a55a7b4883aa0a2, type: 2}
   current: 
+  printEvents: 0
 --- !u!114 &114390733657620536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -900,7 +902,8 @@ MonoBehaviour:
   playerDetectionLevel: 0
   detectionGain: 1.2
   detectionLoss: 0.5
-  attackDistance: 15
+  attackDistance: 3
+  rotationSpeed: 135
   hasSignal: 1
   signalRenderer: {fileID: 23430680459489204}
   squad: {fileID: 0}
@@ -940,7 +943,8 @@ MonoBehaviour:
   playerDetectionLevel: 0
   detectionGain: 1.2
   detectionLoss: 0.5
-  attackDistance: 20
+  attackDistance: 10
+  rotationSpeed: 135
   hasSignal: 1
   signalRenderer: {fileID: 23339058122716594}
   squad: {fileID: 0}
@@ -957,6 +961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootNode: {fileID: 11400000, guid: 5ded0cb793546ed45a5b7127391876ab, type: 2}
   current: 
+  printEvents: 0
 --- !u!114 &114679704984871246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -993,7 +998,7 @@ MonoBehaviour:
   rangedPos: {x: 0, y: 0, z: 0}
   alertLevel: 0
   detectionGain: 1.2
-  detectionLoss: 1.2
+  detectionLoss: 0.5
 --- !u!114 &114835592445797046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1014,6 +1019,7 @@ MonoBehaviour:
   detectionGain: 1.2
   detectionLoss: 0.5
   attackDistance: 3
+  rotationSpeed: 135
   hasSignal: 1
   signalRenderer: {fileID: 23953603422976044}
   squad: {fileID: 0}

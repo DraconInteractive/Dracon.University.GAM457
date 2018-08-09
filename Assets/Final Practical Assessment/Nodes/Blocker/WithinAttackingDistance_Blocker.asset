@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: WithinAttackingDistance_Blocker
   m_EditorClassIdentifier: 
   positive: {fileID: 11400000, guid: c4a3e0cf39eccd24ba3fbad3affd1c34, type: 2}
-  negative: {fileID: 11400000, guid: c86eec36ef645154487d9bf714ede076, type: 2}
-  methodName: WithinAttackingDistance
+  negative: {fileID: 11400000, guid: 85fbcbeeadcac6c42850b7aefbbcc815, type: 2}
+  methodName: WithinAttackDistance

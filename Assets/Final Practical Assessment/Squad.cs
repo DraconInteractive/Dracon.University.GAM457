@@ -43,9 +43,24 @@ namespace Final
             PlayerDetectionLevel -= detectionLoss * Time.deltaTime;
 
             ChangeAlertLevel();
-            melee.playerDetectionLevel = playerDetectionLevel;
-            blocker.playerDetectionLevel = playerDetectionLevel;
-            ranged.playerDetectionLevel = playerDetectionLevel;
+
+            if (melee != null)
+            {
+                melee.playerDetectionLevel = playerDetectionLevel;
+            }
+            
+            if (blocker != null)
+            {
+                blocker.playerDetectionLevel = playerDetectionLevel;
+            }
+            
+            if (ranged != null)
+            {
+                ranged.playerDetectionLevel = playerDetectionLevel;
+            }
+           
+
+            GetSquadPositions();
         }
 
         public POI GetPlayerIntent ()
@@ -84,7 +99,7 @@ namespace Final
             meleePos = Player.player.transform.position;
 
             Vector3 playerToTarget = target.transform.position - Player.player.transform.position;
-            Vector3 bP = Player.player.transform.position + playerToTarget.normalized * 3;
+            Vector3 bP = Player.player.transform.position + playerToTarget.normalized * blocker.attackDistance * 1.5f;
             blockerPos = bP;
 
             Vector3 rP = Player.player.transform.position + (playerToTarget * 0.5f) + Vector3.Cross(playerToTarget, Vector3.up) * 2f;

@@ -25,10 +25,16 @@ namespace Final
         {
             while (true)
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Player.player.transform.position - transform.position, Vector3.up), 65 * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(Player.player.transform.position - transform.position, Vector3.up), rotationSpeed * Time.deltaTime);
                 yield return null;
             }
             yield break;
+        }
+
+        public override void Die()
+        {
+            base.Die();
+            squad.melee = null;
         }
     }
 }

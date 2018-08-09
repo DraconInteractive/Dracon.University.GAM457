@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: AtBlockingPosition_Blocker
   m_EditorClassIdentifier: 
   positive: {fileID: 11400000, guid: 709b1effd01b63c4abb38f25c820fb1e, type: 2}
-  negative: {fileID: 0}
+  negative: {fileID: 11400000, guid: dcf650e9a30f39847b86f0d6803d3fdb, type: 2}
   methodName: AtBlockingPosition
