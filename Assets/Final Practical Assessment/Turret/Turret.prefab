@@ -582,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootNode: {fileID: 11400000, guid: cab45cb08d3295242a1a2d0dcc72e74d, type: 2}
   current: 
+  printEvents: 0
 --- !u!114 &114677824234016686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -619,14 +620,16 @@ MonoBehaviour:
   detectionGain: 1.5
   detectionLoss: 1.5
   attackDistance: 35
+  rotationSpeed: 0
   hasSignal: 1
   signalRenderer: {fileID: 23718648410619936}
-  gunPivot: {fileID: 4015079227278726}
-  turretActiveAudio: {fileID: 82039667630287616}
+  hasAudio: 1
+  activeAudio: {fileID: 82039667630287616}
   defaultAudio: {fileID: 8300000, guid: 60782fa78d764b84b8e7d8a981086ade, type: 3}
   suspiciousAudio: {fileID: 8300000, guid: 92d21351ac4ac3e4eb7474a6a1e6e134, type: 3}
   alertAudio: {fileID: 8300000, guid: 03f4ff7b53c67d54eb189dde56cae69c, type: 3}
   fireAudio: {fileID: 8300000, guid: f2c78af11e51726409df4614bf1de38b, type: 3}
+  gunPivot: {fileID: 4015079227278726}
   coolDown: 0.3
   damage: 6
   shakeDuration: 0.2

@@ -26,16 +26,28 @@ namespace Final
         }
         public AlertLevel alertLevel;
 
+        [Space]
+        [Header("Detection")]
         public float playerDetectionLevel;
         public float detectionGain, detectionLoss;
 
         public Coroutine actionRoutine;
 
-        public float attackDistance, rotationSpeed;
+        [Space]
+        [Header("Properties")]
+        public float attackDistance;
+        public float rotationSpeed;
 
+        [Space]
+        [Header("State Communication")]
         public bool hasSignal;
         public Renderer signalRenderer;
 
+        [Space]
+        [Header("Audio")]
+        public bool hasAudio;
+        public AudioSource activeAudio;
+        public AudioClip defaultAudio, suspiciousAudio, alertAudio, fireAudio;
 
         private void Awake()
         {
@@ -116,12 +128,24 @@ namespace Final
             {
                 case AlertLevel.Default:
                     SetSignal(Color.blue, 3);
+                    if (hasAudio)
+                    {
+                        activeAudio.PlayOneShot(defaultAudio);
+                    }
                     break;
                 case AlertLevel.Suspicious:
                     SetSignal(Color.yellow, 3);
+                    if (hasAudio)
+                    {
+                        activeAudio.PlayOneShot(suspiciousAudio);
+                    }
                     break;
                 case AlertLevel.Alert:
                     SetSignal(Color.red, 3);
+                    if (hasAudio)
+                    {
+                        activeAudio.PlayOneShot(alertAudio);
+                    }
                     break;
             }
         }

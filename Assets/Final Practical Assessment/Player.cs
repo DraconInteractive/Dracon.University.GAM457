@@ -21,7 +21,7 @@ namespace Final
 
         public LayerMask groundMask;
 
-        public bool hasKey;
+        public bool hasKey, hasPrincess;
 
         public PostProcessVolume volume;
         Vignette vignette;

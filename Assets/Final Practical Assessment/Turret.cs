@@ -9,9 +9,6 @@ namespace Final
     {
         public Transform gunPivot;
 
-        public AudioSource turretActiveAudio;
-        public AudioClip defaultAudio, suspiciousAudio, alertAudio, fireAudio;
-
         public float coolDown, damage;
 
         Vector3 initShakePos;
@@ -30,23 +27,6 @@ namespace Final
 
             initLaserWidth = laser.startWidth;
         }
-        public override void SetAlertLevel (AlertLevel newLevel)
-        {
-            base.SetAlertLevel(newLevel);
-            switch (newLevel)
-            {
-                case AlertLevel.Default:
-                    turretActiveAudio.PlayOneShot(defaultAudio);
-                    break;
-                case AlertLevel.Suspicious:
-                    turretActiveAudio.PlayOneShot(suspiciousAudio);
-                    break;
-                case AlertLevel.Alert:
-                    turretActiveAudio.PlayOneShot(alertAudio);
-                    break;
-            }            
-        }
-
 
         public override void Attack()
         {
@@ -78,7 +58,7 @@ namespace Final
 
         void Fire ()
         {
-            turretActiveAudio.PlayOneShot(fireAudio);
+            activeAudio.PlayOneShot(fireAudio);
             StartShake();
             StartPulse();
             print("firing");

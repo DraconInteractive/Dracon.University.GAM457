@@ -903,7 +903,7 @@ MonoBehaviour:
   detectionGain: 1.2
   detectionLoss: 0.5
   attackDistance: 3
-  rotationSpeed: 135
+  rotationSpeed: 180
   hasSignal: 1
   signalRenderer: {fileID: 23430680459489204}
   squad: {fileID: 0}
